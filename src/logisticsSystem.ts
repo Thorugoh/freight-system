@@ -3,19 +3,18 @@ import { BoatTransport, Transport, TruckTransport } from "./transport";
 
 export class LogistcSystem {
     private packages: Package[] = [];
-    private transport: Transport = new TruckTransport();
+    private transport: Transport;
+    
+    constructor(initialTransport: Transport) {
+        this.transport = initialTransport;
+    }
+
     public addPackage(pkg: Package){
         this.packages.push(pkg);
     }
 
-    public setTransport(transportType: "boat" | "truck"){
-        switch(transportType){
-            case "boat":
-                this.transport = new BoatTransport();
-                break;
-            case "truck": 
-                this.transport = new TruckTransport();
-        }
+    public setTransport(newTransport: Transport){
+        this.transport = newTransport;
     }
     
     public calculateTotalFreightCost(): number {
