@@ -1,20 +1,22 @@
 import { Package } from "./package";
-import { BoatTransport, Transport, TruckTransport } from "./transport";
+import { Transport, } from "./transport";
+import { TransportFactory } from "./transportFactory";
 
 export class LogistcSystem {
     private packages: Package[] = [];
     private transport: Transport;
+    private transportFactory = new TransportFactory();
     
-    constructor(initialTransport: Transport) {
-        this.transport = initialTransport;
+    constructor(initialTransport: "boat" | "truck") {
+        this.transport = this.transportFactory.createTransport(initialTransport);
     }
 
     public addPackage(pkg: Package){
         this.packages.push(pkg);
     }
 
-    public setTransport(newTransport: Transport){
-        this.transport = newTransport;
+    public setTransport(newTransportType: "boat" | "truck") {
+        this.transport = this.transportFactory.createTransport(newTransportType);  // Using the factory
     }
     
     public calculateTotalFreightCost(): number {
